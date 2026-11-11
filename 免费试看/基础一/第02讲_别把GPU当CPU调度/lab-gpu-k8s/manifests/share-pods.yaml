@@ -1,0 +1,28 @@
+# 每个 Pod 要 1 张「卡」；开 time-slicing（replicas: 4）后把副本数调到 物理卡数×4，每张物理卡上正好挤 4 个
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: share }
+spec:
+  replicas: 4
+  selector: { matchLabels: { app: share } }
+  template:
+    metadata: { labels: { app: share } }
+    spec:
+      terminationGracePeriodSeconds: 1
+      containers:
+      - name: burn
+        image: nvcr.io/nvidia/pytorch:24.08-py3
+        command: ["python", "-c"]
+        args:
+        - |
+          import torch, time, os
+          x = torch.randn(4096, 4096, device="cuda")
+          t, n = time.time(), 0
+          while True:
+              x = x @ x; x = x / x.norm(); n += 1
+              if time.time() - t > 5:
+                  torch.cuda.synchronize()
+                  print(f"[{os.environ['HOSTNAME']}] matmul/s = {n/(time.time()-t):.1f}", flush=True)
+                  t, n = time.time(), 0
+        resources:
+          limits: { nvidia.com/gpu: 1 }

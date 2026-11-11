@@ -1,0 +1,15 @@
+# 模拟的「训练程序」：真实训练里，NCCL 要等所有 rank 都上线才能开始算
+# 这里用 DNS 代替：rank0 一直等对端 Pod 能被解析，等到了才开始「训练」
+apiVersion: v1
+kind: ConfigMap
+metadata: { name: worker-script }
+data:
+  worker.sh: |
+    i=0
+    until nslookup "$PEER" >/dev/null 2>&1; do
+      i=$((i+1))
+      echo "[$(hostname)] NCCL rendezvous: waiting for $PEER ... ${i}0s (GPU 已占住，没有在算)"
+      sleep 10
+    done
+    echo "[$(hostname)] all ranks joined, training started"
+    while true; do echo "[$(hostname)] step ok"; sleep 10; done

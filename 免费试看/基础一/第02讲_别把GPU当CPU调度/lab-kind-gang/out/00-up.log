@@ -1,0 +1,33 @@
+Creating cluster "gang-lab" ...
+ • Ensuring node image (kindest/node:v1.37.0) 🖼️  ...
+ ✓ Ensuring node image (kindest/node:v1.37.0) 🖼️
+ • Preparing nodes 📦 📦 📦   ...
+ ✓ Preparing nodes 📦 📦 📦 
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+ • Joining worker nodes 🚜  ...
+ ✓ Joining worker nodes 🚜
+Set kubectl context to "kind-gang-lab"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-gang-lab
+
+Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/#community 🙂
+node/gang-lab-control-plane condition met
+node/gang-lab-worker condition met
+node/gang-lab-worker2 condition met
+node/gang-lab-worker patched
+node/gang-lab-worker2 patched
+等待 kubelet 把 capacity 同步到 allocatable ...
+
+== 验证：每个 worker 应显示 nvidia.com/gpu: 2 ==
+NODE                     GPU
+gang-lab-control-plane   <none>
+gang-lab-worker          2
+gang-lab-worker2         2

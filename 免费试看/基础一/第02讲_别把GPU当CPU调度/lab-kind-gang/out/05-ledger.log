@@ -1,0 +1,14 @@
+node/gang-lab-worker patched
+== 验证：账本 8，8 个 Pod 全 Running —— kubectl 看不出它们在抢 2 张卡 ==
+  nvidia.com/gpu:     8
+  nvidia.com/gpu:     8
+  nvidia.com/gpu     8          8
+NAME      READY   STATUS    RESTARTS   AGE   IP            NODE              NOMINATED NODE   READINESS GATES
+share-0   1/1     Running   0          11s   10.244.2.8    gang-lab-worker   <none>           <none>
+share-1   1/1     Running   0          11s   10.244.2.9    gang-lab-worker   <none>           <none>
+share-2   1/1     Running   0          11s   10.244.2.10   gang-lab-worker   <none>           <none>
+share-3   1/1     Running   0          11s   10.244.2.11   gang-lab-worker   <none>           <none>
+share-4   1/1     Running   0          11s   10.244.2.12   gang-lab-worker   <none>           <none>
+share-5   1/1     Running   0          11s   10.244.2.13   gang-lab-worker   <none>           <none>
+share-6   1/1     Running   0          11s   10.244.2.15   gang-lab-worker   <none>           <none>
+share-7   1/1     Running   0          11s   10.244.2.14   gang-lab-worker   <none>           <none>

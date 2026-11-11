@@ -1,0 +1,122 @@
+namespace/storage created
+deployment.apps/redis created
+service/redis created
+Waiting for deployment "redis" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "redis" rollout to finish: 0 of 1 updated replicas are available...
+deployment "redis" successfully rolled out
+Release "juicefs-csi-driver" does not exist. Installing it now.
+NAME: juicefs-csi-driver
+LAST DEPLOYED: Fri Nov  6 11:17:47 2026
+NAMESPACE: kube-system
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Guide on how to configure a StorageClass or PV and start using the driver are here:
+https://juicefs.com/docs/csi/guide/pv
+
+Before start, you need to configure file system credentials in Secret:
+
+- If you are using JuiceFS enterprise, you should create a file system in JuiceFS console, refer to this guide: https://juicefs.com/docs/cloud/getting_started/#create-file-system
+
+- If you are using JuiceFS community, you should prepare a metadata engine and object storage:
+  1. For metadata server, you can refer to this guide: https://juicefs.com/docs/community/databases_for_metadata
+  2. For object storage, you can refer to this guide: https://juicefs.com/docs/community/how_to_setup_object_storage
+
+Then you can use this file to test:
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: juicefs-secret
+  namespace: default
+type: Opaque
+stringData:
+  name: juicefs-vol              # The JuiceFS file system name
+  access-key: <ACCESS_KEY>       # Object storage credentials
+  secret-key: <SECRET_KEY>       # Object storage credentials
+  # follows are for JuiceFS enterprise
+  token: ${JUICEFS_TOKEN}        # Token used to authenticate against JuiceFS Volume
+  # follows are for JuiceFS community
+  metaurl: <META_URL>            # Connection URL for metadata engine.
+  storage: s3                    # Object storage type, such as s3, gs, oss.
+  bucket: <BUCKET>               # Bucket URL of object storage.
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: juicefs-sc
+provisioner: csi.juicefs.com
+parameters:
+  csi.storage.k8s.io/provisioner-secret-name: juicefs-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: default
+  csi.storage.k8s.io/node-publish-secret-name: juicefs-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: default
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: juicefs-pvc
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Pi
+  storageClassName: juicefs-sc
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: juicefs-app
+  namespace: default
+spec:
+  containers:
+  - args:
+    - -c
+    - while true; do echo $(date -u) >> /data/out.txt; sleep 5; done
+    command:
+    - /bin/sh
+    image: busybox
+    name: app
+    volumeMounts:
+    - mountPath: /data
+      name: juicefs-pv
+  volumes:
+  - name: juicefs-pv
+    persistentVolumeClaim:
+      claimName: juicefs-pvc
+```
+== 验证 1：CSI controller / node 都 Running ==
+juicefs-csi-controller-0                         3/3     Running   0          6m14s
+juicefs-csi-controller-1                         3/3     Running   0          50s
+juicefs-csi-dashboard-674969d67c-flktx           1/1     Running   0          6m14s
+juicefs-csi-node-szw2l                           3/3     Running   0          6m14s
+juicefs-csi-node-v9xh8                           3/3     Running   0          6m14s
+secret/juicefs-secret created
+storageclass.storage.k8s.io/juicefs-sc created
+persistentvolumeclaim/juicefs-llm-weights created
+pod/trainer-0 created
+pod/trainer-0 condition met
+
+== 验证 2：PVC Bound，Pod 里 /models 是 JuiceFS ==
+NAME                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+juicefs-llm-weights   Bound    pvc-c213a9b6-1b50-4994-97d8-3622947629e0   10Gi       RWX            juicefs-sc     <unset>                 83s
+E1106 11:25:25.721457   91126 websocket.go:296] Unknown stream id 1, discarding message
+Filesystem                Size      Used Available Use% Mounted on
+JuiceFS:llm-weights       1.0P      4.0K   1024.0T   0% /models
+
+== 写一份 300MB 假权重（trainer-0 在 worker 上）==
+314572800 bytes (300.0MB) copied, 1.672501 seconds, 179.4MB/s
+
+== 验证 3：worker2 第一次读（冷，要回源）==
+real	0m 1.06s
+
+== 验证 4：重建 trainer-1 再读（命中节点本地缓存 /var/jfsCache）==
+real	0m 0.44s
+
+== 验证 5：warmup —— 生产上在训练 Pod 启动前对新节点执行 ==
+2026/11/06 03:25:37.921728 juicefs[47] <INFO>: warmup cache: 1 files (300 MiB bytes) [warmup@warmup.go:309]
+301M	/var/jfsCache

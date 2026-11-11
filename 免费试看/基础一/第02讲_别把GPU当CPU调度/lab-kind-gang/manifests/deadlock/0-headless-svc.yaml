@@ -1,0 +1,16 @@
+# 每个任务一个 headless Service：同组 Pod 之间用 <pod>.job-<x> 这样的域名找到对方
+apiVersion: v1
+kind: Service
+metadata: { name: job-a }
+spec:
+  clusterIP: None                 # headless：不分配虚拟 IP，域名直接解析到 Pod IP
+  publishNotReadyAddresses: true  # Pod 还没 Ready 也发布域名，进程起来就能被找到
+  selector: { job: a }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: job-b }
+spec:
+  clusterIP: None
+  publishNotReadyAddresses: true
+  selector: { job: b }

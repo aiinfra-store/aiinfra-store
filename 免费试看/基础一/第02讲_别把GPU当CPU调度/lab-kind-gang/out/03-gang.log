@@ -1,0 +1,25 @@
+job.batch.volcano.sh/gang-a created
+job.batch.volcano.sh/gang-b created
+== 验证 1：一个任务 Running 2/2，另一个整组 Pending（不占卡）==
+NAME     STATUS    MINAVAILABLE   RUNNINGS   AGE
+gang-a   Running   2              2          20s
+gang-b   Pending   2                         20s
+NAME                                          STATUS    MINMEMBER   RUNNINGS   AGE
+gang-a-4cb54b9d-a306-497d-87d1-9c9789972c03   Running   2           2          20s
+gang-b-0ce11459-f5c1-4c9e-8cc6-cd943b28290e   Inqueue   2                      20s
+NAME              READY   STATUS    RESTARTS   AGE   IP           NODE               NOMINATED NODE   READINESS GATES
+gang-a-worker-0   1/1     Running   0          19s   10.244.1.4   gang-lab-worker2   <none>           <none>
+gang-a-worker-1   1/1     Running   0          19s   10.244.2.6   gang-lab-worker    <none>           <none>
+gang-b-worker-0   0/1     Pending   0          19s   <none>       <none>             <none>           <none>
+gang-b-worker-1   0/1     Pending   0          19s   <none>       <none>             <none>           <none>
+
+== 验证 2：Pending 的原因是「组没凑齐」，不是半启动 ==
+  Warning  FailedScheduling  17s   volcano  pod group is not ready, 2 Pending, 2 minAvailable; Pending: 2 Unschedulable
+
+== 验证 3：删掉 gang-a，gang-b 应整组起来 ==
+job.batch.volcano.sh "gang-a" deleted
+NAME     STATUS    MINAVAILABLE   RUNNINGS   AGE
+gang-b   Running   2              2          40s
+NAME              READY   STATUS    RESTARTS   AGE   IP           NODE               NOMINATED NODE   READINESS GATES
+gang-b-worker-0   1/1     Running   0          39s   10.244.1.5   gang-lab-worker2   <none>           <none>
+gang-b-worker-1   1/1     Running   0          39s   10.244.2.7   gang-lab-worker    <none>           <none>

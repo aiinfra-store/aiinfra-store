@@ -1,0 +1,46 @@
+# 同样两个任务，改由 Volcano 调度：minAvailable=2 → 要么 2 个 Worker 一起上，要么一个都不上
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: gang-a
+spec:
+  schedulerName: volcano
+  minAvailable: 2
+  plugins:
+    svc: []          # 自动建 headless service，Pod 可互相解析
+  tasks:
+  - name: worker
+    replicas: 2
+    template:
+      spec:
+        restartPolicy: Never
+        terminationGracePeriodSeconds: 1
+        containers:
+        - name: trainer
+          image: busybox:1.36
+          command: ["sh", "-c", "echo \"[$(hostname)] all ranks scheduled together, training started\"; while true; do echo step ok; sleep 10; done"]
+          resources:
+            limits: { nvidia.com/gpu: "2" }
+---
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: gang-b
+spec:
+  schedulerName: volcano
+  minAvailable: 2
+  plugins:
+    svc: []
+  tasks:
+  - name: worker
+    replicas: 2
+    template:
+      spec:
+        restartPolicy: Never
+        terminationGracePeriodSeconds: 1
+        containers:
+        - name: trainer
+          image: busybox:1.36
+          command: ["sh", "-c", "echo \"[$(hostname)] all ranks scheduled together, training started\"; while true; do echo step ok; sleep 10; done"]
+          resources:
+            limits: { nvidia.com/gpu: "2" }

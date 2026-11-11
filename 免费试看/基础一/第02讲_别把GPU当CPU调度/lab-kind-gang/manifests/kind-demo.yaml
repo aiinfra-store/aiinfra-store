@@ -1,0 +1,7 @@
+# 小集群配置：1 个控制面 + 1 个 worker，可以用来单独练习建集群、删集群（实验用的 gang-lab 是 1 + 2，见 kind-config.yaml）
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kind-demo
+nodes:
+  - role: control-plane
+  - role: worker

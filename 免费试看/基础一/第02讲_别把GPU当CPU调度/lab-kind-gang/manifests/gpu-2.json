@@ -1,0 +1,4 @@
+[
+  {"op": "add", "path": "/status/capacity/nvidia.com~1gpu", "value": "2"},
+  {"op": "add", "path": "/status/allocatable/nvidia.com~1gpu", "value": "2"}
+]

@@ -1,0 +1,9 @@
+# 字段, Prometheus 类型, 说明
+DCGM_FI_DEV_GPU_UTIL,            gauge,   GPU Util（同 nvidia-smi）
+DCGM_FI_DEV_POWER_USAGE,         gauge,   功耗 W
+DCGM_FI_DEV_FB_USED,             gauge,   显存已用 MiB
+DCGM_FI_PROF_SM_ACTIVE,          gauge,   SM 真在干活的比例
+DCGM_FI_PROF_PIPE_TENSOR_ACTIVE, gauge,   张量核心真在算的比例
+DCGM_FI_PROF_DRAM_ACTIVE,        gauge,   显存带宽占用比例（查邻居）
+DCGM_FI_PROF_PCIE_TX_BYTES,      counter, PCIe 发送字节（查邻居）
+DCGM_FI_PROF_PCIE_RX_BYTES,      counter, PCIe 接收字节（查邻居）

@@ -1,0 +1,23 @@
+# 同样是 2 个 Worker × 2 卡，改成 Volcano Job
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: gang-a
+spec:
+  schedulerName: volcano     # 交给 Volcano 调度，不走默认调度器
+  minAvailable: 2            # 至少 2 个 Pod 能同时排上，才整组放行
+  plugins:
+    svc: []                  # 自动建 headless Service，Worker 互相能解析
+  tasks:
+  - name: worker
+    replicas: 2
+    template:
+      spec:
+        restartPolicy: Never
+        terminationGracePeriodSeconds: 1
+        containers:
+        - name: trainer
+          image: busybox:1.36
+          command: ["sh", "-c", "echo \"[$(hostname)] all ranks joined, training started\"; while true; do echo step ok; sleep 10; done"]
+          resources:
+            limits: { nvidia.com/gpu: 2 }

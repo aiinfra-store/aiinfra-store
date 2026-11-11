@@ -1,0 +1,26 @@
+# 实验用后端：一个 Redis，db1 当 JuiceFS 元数据，db2 当「对象存储」
+# 生产换成 S3/OSS：只改 juicefs-pvc.yaml 里 Secret 的 storage / bucket 两行
+apiVersion: v1
+kind: Namespace
+metadata: { name: storage }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: redis, namespace: storage }
+spec:
+  selector: { matchLabels: { app: redis } }
+  template:
+    metadata: { labels: { app: redis } }
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        args: ["--maxmemory", "1gb", "--save", ""]   # 实验后端不落盘，写入不被快照拖慢
+        ports: [{ containerPort: 6379 }]
+---
+apiVersion: v1
+kind: Service
+metadata: { name: redis, namespace: storage }
+spec:
+  selector: { app: redis }
+  ports: [{ port: 6379 }]

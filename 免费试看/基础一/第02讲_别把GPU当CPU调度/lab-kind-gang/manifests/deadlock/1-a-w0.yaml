@@ -1,0 +1,22 @@
+# 任务 A 的第 0 号 Worker
+apiVersion: v1
+kind: Pod
+metadata:
+  name: a-w0
+  labels: { job: a }               # 属于任务 A
+spec:
+  hostname: a-w0
+  subdomain: job-a                 # 域名 a-w0.job-a，给同组 Worker 找
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 1
+  containers:
+  - name: trainer
+    image: busybox:1.36
+    command: ["sh", "/script/worker.sh"]
+    env:
+    - name: PEER                   # 要等的同组 Worker
+      value: a-w1.job-a.default.svc.cluster.local
+    resources:
+      limits: { nvidia.com/gpu: 2 }  # 每个 Worker 要 2 张卡
+    volumeMounts: [{ name: s, mountPath: /script }]
+  volumes: [{ name: s, configMap: { name: worker-script } }]

@@ -1,0 +1,31 @@
+Release "volcano" does not exist. Installing it now.
+NAME: volcano
+LAST DEPLOYED: Fri Nov  6 11:14:11 2026
+NAMESPACE: volcano-system
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Thank you for installing volcano.
+
+Your release is named volcano.
+
+For more information on volcano, visit:
+https://volcano.sh/
+
+== 验证 1：三个组件 Running（admission / controllers / scheduler）==
+NAME                                   READY   STATUS      RESTARTS   AGE
+volcano-admission-ff6d94c98-vlmj5      1/1     Running     0          61s
+volcano-admission-init-lmhrx           0/1     Completed   0          115s
+volcano-controllers-84bf6664c8-dqzhx   1/1     Running     0          61s
+volcano-scheduler-6b77f5f565-4p2cv     1/1     Running     0          61s
+
+== 验证 2：PodGroup / Job CRD 已注册 ==
+cronjobs.batch.volcano.sh                    Namespaced   v1alpha1(storage)   2026-11-06T03:15:08Z
+jobs.batch.volcano.sh                        Namespaced   v1alpha1(storage)   2026-11-06T03:15:08Z
+podgroups.scheduling.volcano.sh              Namespaced   v1beta1(storage)    2026-11-06T03:15:08Z
+
+== 验证 3：默认队列存在 ==
+NAME      PARENT
+default   root
+root      

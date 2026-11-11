@@ -1,0 +1,15 @@
+configmap/worker-script created
+service/job-a created
+service/job-b created
+pod/a-w0 created
+pod/b-w0 created
+pod/a-w1 created
+pod/b-w1 created
+NAME   READY   STATUS    RESTARTS   AGE   IP           NODE               NOMINATED NODE   READINESS GATES
+a-w0   1/1     Running   0          43s   10.244.2.2   gang-lab-worker    <none>           <none>
+a-w1   0/1     Pending   0          40s   <none>       <none>             <none>           <none>
+b-w0   1/1     Running   0          43s   10.244.1.2   gang-lab-worker2   <none>           <none>
+b-w1   0/1     Pending   0          40s   <none>       <none>             <none>           <none>
+[a-w0] NCCL rendezvous: waiting for a-w1.job-a.default.svc.cluster.local ... 20s (GPU 已占住，没有在算)
+[a-w0] NCCL rendezvous: waiting for a-w1.job-a.default.svc.cluster.local ... 30s (GPU 已占住，没有在算)
+  Warning  FailedScheduling  39s   default-scheduler  0/3 nodes are available: 1 node(s) had untolerated taint(s), 2 Insufficient nvidia.com/gpu. preemption: 0/3 nodes are available: 1 Preemption is not helpful for scheduling, 2 No preemption victims found for incoming pod.

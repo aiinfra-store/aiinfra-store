@@ -1,0 +1,4 @@
+[
+  { "op": "replace", "path": "/status/capacity/nvidia.com~1gpu", "value": "8" },
+  { "op": "replace", "path": "/status/allocatable/nvidia.com~1gpu", "value": "8" }
+]
