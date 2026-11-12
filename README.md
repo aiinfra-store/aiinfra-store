@@ -57,7 +57,7 @@
 
 | 你想往哪走 | 去学哪门 | 价格 | 状态 |
 |---|---|---|---|
-| 模型侧地基还不扎实 | **[02 · 大模型系统基础](https://github.com/aiinfra-store/02-llm-system)**（35 讲）——Transformer、显存与算力精算，亲手写出最小推理循环 / 连续批处理 / 训练循环 | **¥1,699**<br/>首发 ¥1,299 | 🗓️ 排期中 |
+| 模型侧地基还不扎实 | **[02 · 大模型系统基础](https://github.com/aiinfra-store/02-llm-system)**（35 讲）——Transformer、显存与算力精算，亲手写出最小推理循环 / 连续批处理 / 训练循环 | **¥1,999**<br/>首发 ¥1,499 | 🗓️ 排期中 |
 | 往**训练**走 | **[05 · 分布式训练](https://github.com/aiinfra-store/05-distributed-training)**（35 讲）——Scaling law 与成本账、ZeRO / FSDP2 / Megatron、FP8 训练、MFU 调优、断点续训、RL 后训练 | **¥2,599**<br/>首发 ¥1,999 | 🗓️ 排期中 |
 | 往**底层性能**走 | **[06 · 算子开发与优化](https://github.com/aiinfra-store/06-gpu-kernel)**（35 讲）——CUDA 与 Triton、Tensor Core、Blackwell FP4、GEMM 与 FlashAttention 实现 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
 | | **[08 · 集合通信与高性能网络](https://github.com/aiinfra-store/08-collective-comm)**（35 讲）——NCCL 内核与调优、GPUDirect、AlltoAll 与 DeepEP、组网设计与集群验收 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
