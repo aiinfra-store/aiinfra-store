@@ -62,7 +62,7 @@ flowchart TD
 | 模型侧地基还不扎实 | **[大模型系统基础](https://github.com/aiinfra-store/base-2-llm-system)**（35 讲）——Transformer、显存与算力精算，亲手写出最小推理循环 / 连续批处理 / 训练循环 | **¥1,699**<br/>首发 ¥1,299 | 🗓️ 排期中 |
 | 往**训练**走 | **[分布式训练](https://github.com/aiinfra-store/pro-training)**（35 讲）——Scaling law 与成本账、ZeRO / FSDP2 / Megatron、FP8 训练、MFU 调优、断点续训、RL 后训练 | **¥2,599**<br/>首发 ¥1,999 | 🗓️ 排期中 |
 | 往**底层性能**走 | **[算子开发与优化](https://github.com/aiinfra-store/pro-kernel)**（35 讲）——CUDA 与 Triton、Tensor Core、Blackwell FP4、GEMM 与 FlashAttention 实现 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
-| | **[集合通信与高性能网络](https://github.com/aiinfra-store/pro-collective)**（35 讲）——NCCL 内核与调优、GPUDirect、AlltoAll 与 DeepEP、组网设计与集群验收 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
+| | **[集合通信与高性能网络](https://github.com/aiinfra-store/pro-collective)**（35 讲）——NCCL 内核与调优、GPUDirect、AlltoAll 与 DeepEP、组网设计与集群验收<br/>⚠️ **实验成本全课最高**：主体实验必须租 2 台 RDMA 机型，[报名前先看这里](https://github.com/aiinfra-store/pro-collective#rdma-机型到底是什么为什么它贵) | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
 | | **[AI 编译器](https://github.com/aiinfra-store/pro-compiler)**（35 讲）——torch.compile、图优化与算子融合、MLIR 与自定义 Dialect、给新硬件写后端 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
 | 往**国产化**走 | **[模型适配](https://github.com/aiinfra-store/pro-porting)**（35 讲）——国产算力软件栈、算子补齐、精度对齐、性能调优、训练迁移 | **¥2,599**<br/>首发 ¥1,999 | 🗓️ 排期中 |
 | 往**上**走 | **[AI Infra 架构师](https://github.com/aiinfra-store/advanced-architect)**（35 讲）——系统设计、容量模型、选型与 TCO、安全合规与演进、架构面试 | **¥3,299**<br/>首发 ¥2,499 | 🗓️ 排期中 |
@@ -199,7 +199,11 @@ flowchart TD
 
 **训练营**：阶段一需要一台多卡机（课程演示用 8 卡 RTX PRO 6000D / 4 卡 RTX PRO 6000），按量租用即可；参数、镜像、Nginx、New-API、监控这些部分单卡或普通云主机就能做。阶段四的开发阶段本地 K8s 就够，是花钱最少的一阶段。
 
-**专精课**按硬件门槛从低到高大致是：AI 编译器（单卡）→ 模型适配（单卡到多卡）→ 分布式训练、算子（多卡）→ 集合通信（必须租 RDMA 机型，最贵）。
+**专精课**按硬件门槛从低到高大致是：AI 编译器（单卡）→ 模型适配（单卡到多卡）→ 分布式训练、算子（多卡）→ **集合通信（最贵，而且不是贵一点）**。
+
+> **集合通信单独说明**：RDMA 解决的是机器之间的通信，所以它的主体实验**必须 ≥ 2 台机器、挂在同一张 IB 或 RoCE 网上**——数量翻倍、组网另收费、而且多为报价制。按量租两台 8 卡 RDMA 机器是**每小时五六百元人民币的量级**（只看数量级，务必自己用价格计算器核），一次完整的跨机实验做三四个小时就是四位数。课程把实验按「单机能做」和「必须两台」分开编排，必须两台的攒成少数几次集中跑，拿不到环境的部分提供实测数据。**详细算法和省钱办法见[那门课的实验环境与成本](https://github.com/aiinfra-store/pro-collective#rdma-机型到底是什么为什么它贵)，报名前就能看。**
+>
+> 另外：**4090 / 5090 这类消费级卡做不了这门课的实验**——没有 RDMA 网卡，也没有 NVLink。
 
 **每门课的 README 都有「实验环境与成本」一节**，写清哪些实验必须真机、哪些能用模拟替代、按量租大概多少钱，报名前可以先看。
 
