@@ -21,7 +21,7 @@ bash run_all.sh      # 不需要 GPU
 
 ## 其他课程
 
-其余 10 门课正在筹备，**逐讲大纲已经全部公开**，见[课程体系](https://github.com/aiinfra-store)。每门课开始更新后，前 3 讲同样会放到这里。
+其余 9 门课正在筹备，**逐讲大纲已经全部公开**，见[课程体系](https://github.com/aiinfra-store)。每门课开始更新后，前 3 讲同样会放到这里。
 
 ---
 
