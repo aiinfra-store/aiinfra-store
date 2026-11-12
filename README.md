@@ -22,6 +22,10 @@ flowchart TD
 
 **12 门课 · 385 讲 · 每讲 40 分钟。** 箭头是先后顺序，不是必须全买——每门课都能单独学。
 
+> **现在开放报名的是两门**：**特训课**（✅ 正在更新，每周 3 讲）和**训练营阶段一**（🛠️ 筹备录制，可预订）。
+> 其余课程的**逐讲大纲已经全部写完并公开，现在就能逐讲看**——下面表格里标的是已经定好的正式价与首发价，不是暂定；
+> 早鸟价与具体排期在该门课开课前约 30 天公告，**到那时再报名也不吃亏**（首发价在整门课更新完之前一直有效）。
+
 ### 正在讲的两套课
 
 这两套互补不是替代：**特训课讲「为什么」，训练营讲「怎么交付」。** 可以单买，一起学是最顺的路径。
@@ -56,11 +60,11 @@ flowchart TD
 | 你想往哪走 | 去学哪门 | 价格 | 状态 |
 |---|---|---|---|
 | 模型侧地基还不扎实 | **[大模型系统基础](https://github.com/aiinfra-store/base-2-llm-system)**（35 讲）——Transformer、显存与算力精算，亲手写出最小推理循环 / 连续批处理 / 训练循环 | **¥1,699**<br/>首发 ¥1,299 | 🗓️ 排期中 |
-| 往**训练**走 | **[分布式训练](https://github.com/aiinfra-store/track-4-training)**（35 讲）——Scaling law 与成本账、ZeRO / FSDP2 / Megatron、FP8 训练、MFU 调优、断点续训、RL 后训练 | **¥2,599**<br/>首发 ¥1,999 | 🗓️ 排期中 |
-| 往**底层性能**走 | **[算子开发与优化](https://github.com/aiinfra-store/track-5-kernel)**（35 讲）——CUDA 与 Triton、Tensor Core、Blackwell FP4、GEMM 与 FlashAttention 实现 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
-| | **[集合通信与高性能网络](https://github.com/aiinfra-store/track-7-collective)**（35 讲）——NCCL 内核与调优、GPUDirect、AlltoAll 与 DeepEP、组网设计与集群验收 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
-| | **[AI 编译器](https://github.com/aiinfra-store/track-8-compiler)**（35 讲）——torch.compile、图优化与算子融合、MLIR 与自定义 Dialect、给新硬件写后端 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
-| 往**国产化**走 | **[模型适配](https://github.com/aiinfra-store/track-6-porting)**（35 讲）——国产算力软件栈、算子补齐、精度对齐、性能调优、训练迁移 | **¥2,599**<br/>首发 ¥1,999 | 🗓️ 排期中 |
+| 往**训练**走 | **[分布式训练](https://github.com/aiinfra-store/pro-training)**（35 讲）——Scaling law 与成本账、ZeRO / FSDP2 / Megatron、FP8 训练、MFU 调优、断点续训、RL 后训练 | **¥2,599**<br/>首发 ¥1,999 | 🗓️ 排期中 |
+| 往**底层性能**走 | **[算子开发与优化](https://github.com/aiinfra-store/pro-kernel)**（35 讲）——CUDA 与 Triton、Tensor Core、Blackwell FP4、GEMM 与 FlashAttention 实现 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
+| | **[集合通信与高性能网络](https://github.com/aiinfra-store/pro-collective)**（35 讲）——NCCL 内核与调优、GPUDirect、AlltoAll 与 DeepEP、组网设计与集群验收 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
+| | **[AI 编译器](https://github.com/aiinfra-store/pro-compiler)**（35 讲）——torch.compile、图优化与算子融合、MLIR 与自定义 Dialect、给新硬件写后端 | **¥2,999**<br/>首发 ¥2,299 | 🗓️ 排期中 |
+| 往**国产化**走 | **[模型适配](https://github.com/aiinfra-store/pro-porting)**（35 讲）——国产算力软件栈、算子补齐、精度对齐、性能调优、训练迁移 | **¥2,599**<br/>首发 ¥1,999 | 🗓️ 排期中 |
 | 往**上**走 | **[AI Infra 架构师](https://github.com/aiinfra-store/advanced-architect)**（35 讲）——系统设计、容量模型、选型与 TCO、安全合规与演进、架构面试 | **¥3,299**<br/>首发 ¥2,499 | 🗓️ 排期中 |
 
 > **架构师课先修**：至少学完训练营阶段三或一门专精课，并且有实际工程经验。这门课评的是取舍，没有真实项目背景收获会小很多。
@@ -178,6 +182,7 @@ flowchart TD
 
 **价格**：每门课的价格就标在上面的[课程表](#正在讲的两套课)里，**单门售卖，不强制打包**。
 
+- **组合包｜入门包 ¥2,299**：**特训课 + 训练营阶段一**（首发价单买合计 ¥2,598）。这是最顺的第一笔——先用特训课把「机器为什么这样跑」算清楚，再用阶段一把第一套能交付的服务做出来
 - **组合包｜训练营四阶段联报 ¥4,999**：四个阶段一起拿下（首发价单买合计 ¥5,896），有效期从四个阶段全部更新完毕之日起算。其他组合包等相应课程开讲时再上
 - **老学员**：买过任意一门，之后每门立减 ¥300；已单买过的课要补成组合包，按已付金额全额抵扣，只补差价
 - **三档价格，越早越便宜**：
