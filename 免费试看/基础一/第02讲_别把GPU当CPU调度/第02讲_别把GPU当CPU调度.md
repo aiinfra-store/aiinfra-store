@@ -924,7 +924,7 @@ kubectl delete vcjob --all
 | Volcano Job 提交后没有任何 Pod | `kubectl get pods -n volcano-system` 确认三个组件都在跑；`kubectl describe vcjob gang-a` 看事件 |
 | helm 安装报 `EOF` 或 `context deadline exceeded` | 从 GitHub 拉 chart 失败或超时，重试；网络不稳时配代理 |
 
-这里的卡是账本上的假卡，但调度器的行为和真卡完全一样。用真卡再跑一遍放在后面的真机实战里；Volcano 在生产集群上的完整落地（队列、优先级、抢占）是《训练营阶段二》第 09～10 讲的内容。
+这里的卡是账本上的假卡，但调度器的行为和真卡完全一样。用真卡再跑一遍放在后面的真机实战里；Volcano 在生产集群上的完整落地（队列、优先级、抢占）是《训练营阶段二》第 10～11 讲的内容。
 
 ### 7. 练习：读死锁日志（不需要任何硬件）
 
@@ -1414,7 +1414,7 @@ kubectl -n kube-system exec "$MP" -- du -sh /var/jfsCache
 
 > 实验包里的对应脚本：`06-juicefs.sh`（第一到第七步一次跑完）。
 
-接入真正的对象存储、配上 P2P 分发的完整实战，在《训练营阶段二》第 19～20 讲里做。
+接入真正的对象存储、配上 P2P 分发的完整实战，在《训练营阶段二》第 20～21 讲里做。
 
 ---
 
@@ -1655,7 +1655,7 @@ kubectl patch node gang-lab-worker --subresource=status --type=json --patch-file
 | dcgm-exporter 空闲时 | 能看到 `GPU_UTIL` 和两个 PROF 指标；PROF 一行都没有 → 卡不支持或清单没生效 |
 | dcgm-exporter 制造空等后 | GPU1：`GPU_UTIL` 接近 100，`PIPE_TENSOR_ACTIVE` 接近 0，功耗偏低 |
 
-GPU 监控告警和坏卡自动驱逐的完整做法，在《训练营阶段二》第 23 讲里讲。
+GPU 监控告警和坏卡自动驱逐的完整做法，在《训练营阶段二》第 24 讲里讲。
 
 ---
 
@@ -2320,7 +2320,7 @@ helm uninstall gpu-operator -n gpu-operator
 | 方向 | 内容 |
 |---|---|
 | **后续真机演示**（本讲标了「后续真机演示」的实验） | 网络：NCCL 卡间直连 vs Socket，有条件加双机 RDMA 验收；虚拟化：3A / 3B 邻居对照、GPU Operator 开 time-slicing；可观测：fake_busy 复现利用率虚高、dcgm-exporter 抓出来；调度：死锁与 Volcano 成组调度换真卡再跑一遍 |
-| **04 · 训练营阶段二 · K8s 大模型集群**（本讲模拟部分的完整生产实战） | Volcano / Kueue 生产落地（第 09～10 讲）；MIG / MPS / HAMi GPU 切分（第 02 讲）；容器 RDMA 双网络（第 11 讲）；共享存储与权重分发加速（第 19～20 讲）；GPU 监控与坏卡自动驱逐（第 23 讲） |
+| **04 · 训练营阶段二 · K8s 大模型集群**（本讲模拟部分的完整生产实战） | Volcano / Kueue 生产落地（第 10～11 讲）；MIG / MPS / HAMi GPU 切分（第 03 讲）；容器 RDMA 双网络（第 12 讲）；共享存储与权重分发加速（第 20～21 讲）；GPU 监控与坏卡自动驱逐（第 24 讲） |
 | **特训课后续实战**（按需要的环境分三类） | 零硬件：MFU / 算术强度计算、组网接线图、Wireshark 找 PFC 暂停帧；普通云主机：fio、juicefs bench、iperf3 软中断、Soft-RoCE；需要 GPU：CPU vs GPU 矩阵乘、Nsight Compute、拓扑 / NUMA / 显存坏道（先讲原理，真机后补） |
 
 真机实战后面会找时间补上，也会考虑上架一些卡资源给大家演示；完课以后，视情况可能提供实验卡的租赁环境。
